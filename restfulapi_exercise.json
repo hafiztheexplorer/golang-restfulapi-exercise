@@ -1,0 +1,42 @@
+{
+"openapi": "3.0.3",
+"info":{
+    "title": "",
+    "description": "",
+    "version": "",
+    "contact": {
+        "name": "",
+        "email": "email@example.com",
+        "url": "https   "
+    },
+    "license": {
+        "name": "",
+        "url": "https"
+    }
+},
+"servers":[
+    {
+        "url": "https://{environment}.example.com",
+        "description": "description",
+        "variables": {
+            "environment": {
+                "default": "default",
+                "description": "description",
+                "enum": []
+            }
+        }
+    }
+],
+"externalDocs": {
+    "description": "",
+    "url": "https"
+},
+"paths": {
+    "/crud/{userid}":{}
+},
+"components": {
+    "parameters": {},
+    "schemas": {},
+    "securitySchemes": {}
+}
+}
