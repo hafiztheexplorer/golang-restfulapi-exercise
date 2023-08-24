@@ -1,13 +1,13 @@
 {
 "openapi": "3.0.3",
 "info":{
-    "title": "",
-    "description": "",
-    "version": "",
+    "title": "Kategori RESTful API",
+    "description": "spesifikasi API untuk Kategori RESTful API",
+    "version": "1.0.0",
     "contact": {
-        "name": "",
-        "email": "email@example.com",
-        "url": "https   "
+        "name": "hafiz nur",
+        "email": "hafiznur@example.com",
+        "url": "https://github.com/hafiztheexplorer"
     },
     "license": {
         "name": "",
@@ -16,13 +16,16 @@
 },
 "servers":[
     {
-        "url": "https://{environment}.example.com",
-        "description": "description",
+        "url": "https://{environment}:{portlocalhost}",
+        "description": "kita gunakan localhost, for the sake of my sanity please",
         "variables": {
             "environment": {
-                "default": "default",
-                "description": "description",
-                "enum": []
+                "default": "localhost",
+                "description": "description"
+            },
+            "portlocalhost":{
+                "default": "3000",
+                "description": "ummmm, pilih sesuai selera, saya sih 3000"
             }
         }
     }
