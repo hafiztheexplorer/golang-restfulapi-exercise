@@ -1,45 +1,222 @@
 {
-"openapi": "3.0.3",
-"info":{
+  "openapi": "3.0.3",
+  "info": {
     "title": "Kategori RESTful API",
     "description": "spesifikasi API untuk Kategori RESTful API",
     "version": "1.0.0",
     "contact": {
-        "name": "hafiz nur",
-        "email": "hafiznur@example.com",
-        "url": "https://github.com/hafiztheexplorer"
+      "name": "hafiz nur",
+      "email": "hafiznur@example.com",
+      "url": "https://github.com/hafiztheexplorer"
     },
     "license": {
-        "name": "",
-        "url": "https"
+      "name": "",
+      "url": "https"
     }
-},
-"servers":[
+  },
+  "servers": [
     {
-        "url": "https://{environment}:{portlocalhost}",
-        "description": "kita gunakan localhost, for the sake of my sanity please",
-        "variables": {
-            "environment": {
-                "default": "localhost",
-                "description": "description"
-            },
-            "portlocalhost":{
-                "default": "3000",
-                "description": "ummmm, pilih sesuai selera, saya sih 3000"
-            }
+      "url": "https://{environment}:{portlocalhost}/api",
+      "description": "kita gunakan localhost, for the sake of my sanity please",
+      "variables": {
+        "environment": {
+          "default": "localhost",
+          "description": "description"
+        },
+        "portlocalhost": {
+          "default": "3000",
+          "description": "ummmm, pilih sesuai selera, saya sih 3000"
         }
+      }
     }
-],
-"externalDocs": {
+  ],
+  "externalDocs": {
     "description": "",
     "url": "https"
-},
-"paths": {
-    "/crud/{userid}":{}
-},
-"components": {
-    "parameters": {},
-    "schemas": {},
+  },
+  "paths": {
+    "/macamkategori": {
+      "get": {
+        "tags": [
+          "API kategori"
+        ],
+        "summary": "ambil data kategori dari DB",
+        "responses": {
+          "200": {
+            "description": "response sukses saat ambil data kategori dari DB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getR200appjsonschema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "API kategori"
+        ],
+        "summary": "masukin data kategori ke DB",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postRBappjsonschema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "response sukses saat masukin data ke DB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postR200appjsonschema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "API kategori"
+        ],
+        "summary": "hapus data kategori dari DB",
+        "responses": {
+          "200": {
+            "description": "response sukses saat menghapus data kategori dari DB"
+          }
+        }
+      }
+    },
+    "/macamkategori/{idKategori}": {
+      "get": {
+        "tags": [
+          "API kategori"
+        ],
+        "summary": "ambil data kategori di database by Id",
+        "description": "ambil data kategori di database by Id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/create-update-namakategori"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sukses mendapatkan Id Kategori",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postR200appjsonschema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "API kategori"
+        ],
+        "summary": "update data kategori existing di DB by id",
+        "description": "update data kategori existing di DB by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/create-update-namakategori"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postRBappjsonschema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sukses mendapatkan Id Kategori",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postR200appjsonschema"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "create-update-namakategori": {
+        "name": "idKategori",
+        "in": "path",
+        "description": "Id Kategori",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "default": "idKategori",
+          "nullable": false
+        }
+      }
+    },
+    "schemas": {
+      "getR200appjsonschema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "$ref": "#/components/schemas/data-id-namakategori"
+          }
+        }
+      },
+      "postRBappjsonschema": {
+        "type": "object",
+        "properties": {
+          "namakategori": {
+            "type": "string"
+          }
+        }
+      },
+      "postR200appjsonschema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/data-id-namakategori"
+          }
+        }
+      },
+      "data-id-namakategori": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "namakategori": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "securitySchemes": {}
-}
+  }
 }
