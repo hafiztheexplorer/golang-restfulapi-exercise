@@ -3,14 +3,15 @@ package repository
 import (
 	"context"
 	"database/sql"
-	"hafiztheexplorer/golang-restfulapi-exercise/model/domain"
+	"golang-restfulapi-exercise/model/domain"
 )
 
 // kita buat interfacenya dulu jangan langsung struct
 type CategoryRepository interface {
-	Create(Category context.Context, sql.Tx, Category domain.Category)
-	Update(ctx context.Context, sql.Tx)
-	Delete(ctx context.Context, sql.Tx)
-	FindById(ctx context.Context, sql.Tx)
-	FindAll(ctx context.Context, sql.Tx)
+	// interface untuk post
+	Create(ctx context.Context, tx *sql.Tx, Category domain.Category) domain.Category
+	Update(ctx context.Context, tx *sql.Tx, Category domain.Category) domain.Category
+	Delete(ctx context.Context, tx *sql.Tx, Category domain.Category)
+	FindById(ctx context.Context, tx *sql.Tx, idKategori int64) domain.Category
+	FindAll(ctx context.Context, tx *sql.Tx) []domain.Category
 }
