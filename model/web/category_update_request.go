@@ -1,6 +1,6 @@
 package web
 
-type CategoryResponse struct {
+type CategoryUpdateRequest struct {
 	Id           int64
 	Namakategori string
 }
