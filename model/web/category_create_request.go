@@ -1,5 +1,5 @@
 package web
 
 type CategoryCreateRequest struct {
-	Namakategori string
+	Namakategori string `validate:"required,max=255,min=1"`
 }
