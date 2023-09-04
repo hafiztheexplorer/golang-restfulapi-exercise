@@ -17,7 +17,9 @@ type CategoryServiceImplem struct {
 	Validate           *validator.Validate
 }
 
-func (service *CategoryServiceImplem) FindByIdGet(ctx context.Context, idKategori int64) web.CategoryResponse {
+func NewCateoryService(categoryRepository repository.CategoryRepository)
+
+func (service *CategoryServiceImplem) FindByIdGet(ctx context.Context, idKategori int) web.CategoryResponse {
 	tx, error := service.DB.Begin()
 	helper.PanicIfError(error)
 	defer helper.CommitorRollback(tx)
@@ -39,6 +41,9 @@ func (service *CategoryServiceImplem) FindAllGet(ctx context.Context) []web.Cate
 }
 
 func (service *CategoryServiceImplem) CreatePost(ctx context.Context, request web.CategoryCreateRequest) web.CategoryResponse {
+	error := service.Validate.Struct(request)
+	helper.PanicIfError(error)
+
 	tx, error := service.DB.Begin()
 	helper.PanicIfError(error)
 	defer helper.CommitorRollback(tx)
@@ -54,6 +59,9 @@ func (service *CategoryServiceImplem) CreatePost(ctx context.Context, request we
 }
 
 func (service *CategoryServiceImplem) UpdatePut(ctx context.Context, request web.CategoryUpdateRequest) web.CategoryResponse {
+	error := service.Validate.Struct(request)
+	helper.PanicIfError(error)
+
 	tx, error := service.DB.Begin()
 	helper.PanicIfError(error)
 	defer helper.CommitorRollback(tx)
@@ -68,7 +76,7 @@ func (service *CategoryServiceImplem) UpdatePut(ctx context.Context, request web
 	return helper.ToCategoryResponse(category)
 }
 
-func (service *CategoryServiceImplem) DeleteDelete(ctx context.Context, idKategori int64) {
+func (service *CategoryServiceImplem) DeleteDelete(ctx context.Context, idKategori int) {
 	tx, error := service.DB.Begin()
 	helper.PanicIfError(error)
 	defer helper.CommitorRollback(tx)

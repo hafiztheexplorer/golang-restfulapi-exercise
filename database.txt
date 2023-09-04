@@ -1,0 +1,24 @@
+file2 untuk api database:
+helper
+    - error.go
+    - model.go
+    - tx.go
+model
+    domain
+        -category.go
+    web
+        -category_response.go
+        -category_create_request.go
+        -category_update_request.go
+repository
+    -category_repository_implementation.go
+    -category_repository.go
+service
+    -category_service_implementation.go
+    -category_service.go
+
+database:
+    -localhost.session.sql
+
+RESTful API:
+    -restfulapi_exercise.json

@@ -12,6 +12,6 @@ type CategoryRepository interface {
 	Create(ctx context.Context, tx *sql.Tx, Category domain.Category) domain.Category
 	Update(ctx context.Context, tx *sql.Tx, Category domain.Category) domain.Category
 	Delete(ctx context.Context, tx *sql.Tx, Category domain.Category)
-	FindById(ctx context.Context, tx *sql.Tx, idKategori int64) (domain.Category, error)
+	FindById(ctx context.Context, tx *sql.Tx, idKategori int) (domain.Category, error)
 	FindAll(ctx context.Context, tx *sql.Tx) []domain.Category
 }
