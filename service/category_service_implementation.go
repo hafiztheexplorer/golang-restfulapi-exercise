@@ -17,7 +17,13 @@ type CategoryServiceImplem struct {
 	Validate           *validator.Validate
 }
 
-func NewCateoryService(categoryRepository repository.CategoryRepository)
+func NewCategoryService(categoryRepository repository.CategoryRepository, db *sql.DB, validate *validator.Validate) CategoryService {
+	return &CategoryServiceImplem{
+		CategoryRepository: categoryRepository,
+		DB:                 db,
+		Validate:           validate,
+	}
+}
 
 func (service *CategoryServiceImplem) FindByIdGet(ctx context.Context, idKategori int) web.CategoryResponse {
 	tx, error := service.DB.Begin()

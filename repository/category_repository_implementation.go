@@ -9,7 +9,12 @@ import (
 	"golang-restfulapi-exercise/model/domain"
 )
 
-type CategoryRepositoryImplem struct{}
+type CategoryRepositoryImplem struct {
+}
+
+func NewCategoryRepository() CategoryRepository {
+	return &CategoryRepositoryImplem{}
+}
 
 // funtion interaksi dari go ke database untuk post nama kategori
 func (repository *CategoryRepositoryImplem) Create(ctx context.Context, tx *sql.Tx, Category domain.Category) domain.Category {
@@ -54,7 +59,7 @@ func (repository *CategoryRepositoryImplem) Delete(ctx context.Context, tx *sql.
 }
 
 // function interaksi dari go ke database untuk menemukan(select) row data(1 row isinya id dan namakategori), dari databse by Id
-func (repository *CategoryRepositoryImplem) FindById(ctx context.Context, tx *sql.Tx, idKategori int64) (domain.Category, error) {
+func (repository *CategoryRepositoryImplem) FindById(ctx context.Context, tx *sql.Tx, idKategori int) (domain.Category, error) {
 	sqlscript := "select id, namakategori from category where id = ?"
 	rows, error := tx.QueryContext(ctx, sqlscript, idKategori)
 	helper.PanicIfError(error)
