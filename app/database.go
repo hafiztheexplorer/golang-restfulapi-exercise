@@ -11,7 +11,7 @@ func NewDB() *sql.DB {
 	// rumusnya seperti ini Open(driverName string, dataSourceName string)
 	// datasource kalau bingung coba buka web github dari sql.DB nanti
 	// akan dikasih tahu cara menulisnya
-	db, error := sql.Open("mysql", "root@tcp(localhost:3306)/exercise_golang_restfulapi")
+	db, error := sql.Open("mysql", "root:root2adminthistimearound@tcp(localhost:3306)/gorestfulapi_exercise")
 	helper.PanicIfError(error)
 
 	db.SetConnMaxIdleTime(5)

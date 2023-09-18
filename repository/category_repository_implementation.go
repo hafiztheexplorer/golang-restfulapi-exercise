@@ -51,7 +51,7 @@ func (repository *CategoryRepositoryImplem) Update(ctx context.Context, tx *sql.
 
 // function interaksi dari go ke database untuk delete data di database by id
 func (repository *CategoryRepositoryImplem) Delete(ctx context.Context, tx *sql.Tx, Category domain.Category) {
-	sqlscript := "delete from where id = ?"
+	sqlscript := "delete from category where id = ?"
 	result, error := tx.ExecContext(ctx, sqlscript, Category.Id)
 	fmt.Print(result)
 	helper.PanicIfError(error)
