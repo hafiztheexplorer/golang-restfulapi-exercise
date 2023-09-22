@@ -34,7 +34,7 @@ func (repository *CategoryRepositoryImplem) Create(ctx context.Context, tx *sql.
 	id, error := result.LastInsertId()
 	helper.PanicIfError(error)
 
-	Category.Id = id
+	Category.Id = int(id)
 	return Category
 
 }
@@ -64,6 +64,8 @@ func (repository *CategoryRepositoryImplem) FindById(ctx context.Context, tx *sq
 	rows, error := tx.QueryContext(ctx, sqlscript, idKategori)
 	helper.PanicIfError(error)
 
+	defer rows.Close()
+
 	category := domain.Category{}
 
 	if rows.Next() {
@@ -79,16 +81,18 @@ func (repository *CategoryRepositoryImplem) FindById(ctx context.Context, tx *sq
 
 // function interaksi dari go ke database untuk mendisplaykan (select) row semua data(1 row berupa id, namakategori), diuang dengan menggunakan perulangan for dan rows.Next
 func (repository *CategoryRepositoryImplem) FindAll(ctx context.Context, tx *sql.Tx) []domain.Category {
-	sqlscript := "select id,namakategori from category"
+	sqlscript := "select id, namakategori from category"
 	rows, error := tx.QueryContext(ctx, sqlscript)
 	helper.PanicIfError(error)
+
+	defer rows.Close()
 
 	var categories []domain.Category
 	for rows.Next() {
 		category := domain.Category{}
 		error := rows.Scan(&category.Id, &category.Namakategori)
 		helper.PanicIfError(error)
-		categories = append(categories, domain.Category{})
+		categories = append(categories, category)
 	}
 
 	return categories

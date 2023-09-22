@@ -1,3 +1,32 @@
-### get all categories
+### please use thunder client api testing
+### please run the exe first
+
+### get all "namakategori" at table "category"
 GET http://localhost:3000/api/categories
+Accept: application/json
+
+## create new item "namakategori" at table "category"
+POST http://localhost:3000/api/categories
+Accept: application/json
+Content-Type: application/json
+
+{
+  "namakategori":"test1"
+}
+
+### get items "namakategori" at table "category" by id
+GET http://localhost:3000/api/categories/1
+Accept: application/json
+
+### update item "namakategori" at table "category" by id
+PUT http://localhost:3000/api/categories/1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "namakategori":"test1_changed1"
+}
+
+### update item "namakategori" at table "category" by id
+DELETE http://localhost:3000/api/categories/4
 Accept: application/json

@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"encoding/json"
 	"golang-restfulapi-exercise/helper"
 	"golang-restfulapi-exercise/model/web"
 	"golang-restfulapi-exercise/service"
@@ -26,7 +25,7 @@ func (controller *CategoryControllerImplem) FindById(w http.ResponseWriter, r *h
 	id, error := strconv.Atoi(idKategori)
 	helper.PanicIfError(error)
 
-	categoryResponse := controller.CategoryService.FindByIdGet(r.Context(), id)
+	categoryResponse := controller.CategoryService.FindById(r.Context(), id)
 
 	// contoh web response
 	webResponse := web.Webresponse{
@@ -35,16 +34,11 @@ func (controller *CategoryControllerImplem) FindById(w http.ResponseWriter, r *h
 		Data:   categoryResponse,
 	}
 
-	encoder := json.NewEncoder(w)
-	error = encoder.Encode(webResponse)
-	helper.PanicIfError(error)
-
-	// karena ini json maka jangan lupa agar menambahkan di header
-	w.Header().Add("Content-Type", "application/json")
+	helper.WriteToResponseBody(w, webResponse)
 }
 
 func (controller *CategoryControllerImplem) FindAll(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	categoryResponses := controller.CategoryService.FindAllGet(r.Context())
+	categoryResponses := controller.CategoryService.FindAll(r.Context())
 
 	// contoh web response & write ke jsonnya
 	webResponse := web.Webresponse{
@@ -53,24 +47,16 @@ func (controller *CategoryControllerImplem) FindAll(w http.ResponseWriter, r *ht
 		Data:   categoryResponses,
 	}
 
-	encoder := json.NewEncoder(w)
-	error := encoder.Encode(webResponse)
-	helper.PanicIfError(error)
-
-	// karena ini json maka jangan lupa agar menambahkan di header
-	w.Header().Add("Content-Type", "application/json")
+	helper.WriteToResponseBody(w, webResponse)
 }
 
 func (controller *CategoryControllerImplem) Create(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// baca data dari json
-	decoder := json.NewDecoder(r.Body)
-
 	categoryCreateRequest := web.CategoryCreateRequest{}
-	error := decoder.Decode(&categoryCreateRequest)
-	helper.PanicIfError(error)
+	helper.ReadFromRequestBody(r, &categoryCreateRequest)
 
 	// dari controller kita panggil servicenya
-	categoryresponse := controller.CategoryService.CreatePost(r.Context(), categoryCreateRequest)
+	categoryresponse := controller.CategoryService.Create(r.Context(), categoryCreateRequest)
 
 	// contoh web response & write ke jsonnya
 	webResponse := web.Webresponse{
@@ -79,20 +65,16 @@ func (controller *CategoryControllerImplem) Create(w http.ResponseWriter, r *htt
 		Data:   categoryresponse,
 	}
 
-	encoder := json.NewEncoder(w)
-	error = encoder.Encode(webResponse)
-	helper.PanicIfError(error)
-
 	// karena ini json maka jangan lupa agar menambahkan di header
-	w.Header().Add("Content-Type", "application/json")
+	helper.WriteToResponseBody(w, webResponse)
+
 }
 
 func (controller *CategoryControllerImplem) Update(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// baca data dari json
-	decoder := json.NewDecoder(r.Body)
+
 	categoryUpdateRequest := web.CategoryUpdateRequest{}
-	error := decoder.Decode(&categoryUpdateRequest)
-	helper.PanicIfError(error)
+	helper.ReadFromRequestBody(r, &categoryUpdateRequest)
 
 	idKategori := p.ByName("idKategori")
 	id, error := strconv.Atoi(idKategori)
@@ -101,7 +83,7 @@ func (controller *CategoryControllerImplem) Update(w http.ResponseWriter, r *htt
 	categoryUpdateRequest.Id = id
 
 	// dari controller kita panggil servicenya
-	categoryresponse := controller.CategoryService.UpdatePut(r.Context(), categoryUpdateRequest)
+	categoryresponse := controller.CategoryService.Update(r.Context(), categoryUpdateRequest)
 
 	// contoh web response & write ke jsonnya
 	webResponse := web.Webresponse{
@@ -110,12 +92,7 @@ func (controller *CategoryControllerImplem) Update(w http.ResponseWriter, r *htt
 		Data:   categoryresponse,
 	}
 
-	encoder := json.NewEncoder(w)
-	error = encoder.Encode(webResponse)
-	helper.PanicIfError(error)
-
-	// karena ini json maka jangan lupa agar menambahkan di header
-	w.Header().Add("Content-Type", "application/json")
+	helper.WriteToResponseBody(w, webResponse)
 }
 
 func (controller *CategoryControllerImplem) Delete(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
@@ -123,7 +100,7 @@ func (controller *CategoryControllerImplem) Delete(w http.ResponseWriter, r *htt
 	id, error := strconv.Atoi(idKategori)
 	helper.PanicIfError(error)
 
-	controller.CategoryService.DeleteDelete(r.Context(), id)
+	controller.CategoryService.Delete(r.Context(), id)
 
 	// contoh web response & write ke jsonnya
 	webResponse := web.Webresponse{
@@ -131,11 +108,6 @@ func (controller *CategoryControllerImplem) Delete(w http.ResponseWriter, r *htt
 		Status: "OK",
 	}
 
-	encoder := json.NewEncoder(w)
-	error = encoder.Encode(webResponse)
-	helper.PanicIfError(error)
-
-	// karena ini json maka jangan lupa agar menambahkan di header
-	w.Header().Add("Content-Type", "application/json")
+	helper.WriteToResponseBody(w, webResponse)
 
 }
