@@ -27,7 +27,7 @@ func validationError(w http.ResponseWriter, r *http.Request, err interface{}) bo
 		w.WriteHeader(http.StatusBadRequest)
 
 		webResponse := web.Webresponse{
-			Code:   http.StatusBadRequest, // internal server error codenya 500
+			Code:   http.StatusBadRequest, // internal server error codenya 400
 			Status: "INVALID/BAD REQUEST",
 			Data:   exception.Error(),
 		}
@@ -46,7 +46,7 @@ func notFoundError(w http.ResponseWriter, r *http.Request, err interface{}) bool
 		w.WriteHeader(http.StatusNotFound)
 
 		webResponse := web.Webresponse{
-			Code:   http.StatusNotFound, // internal server error codenya 500
+			Code:   http.StatusNotFound, // internal server error codenya 404
 			Status: "DATA NOT FOUND",
 			Data:   exception.Error,
 		}

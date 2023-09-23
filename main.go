@@ -3,8 +3,8 @@ package main
 import (
 	"golang-restfulapi-exercise/app"
 	"golang-restfulapi-exercise/controller"
-	"golang-restfulapi-exercise/exception"
 	"golang-restfulapi-exercise/helper"
+	"golang-restfulapi-exercise/middleware"
 	"golang-restfulapi-exercise/repository"
 	"golang-restfulapi-exercise/service"
 	"net/http"
@@ -12,7 +12,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/julienschmidt/httprouter"
 )
 
 func main() {
@@ -25,19 +24,11 @@ func main() {
 	categoryService := service.NewCategoryService(categoryRepository, db, validate)
 	categoryController := controller.NewCategoryController(categoryService)
 
-	router := httprouter.New()
-
-	router.GET("/api/categories", categoryController.FindAll)
-	router.GET("/api/categories/:idKategori", categoryController.FindById)
-	router.POST("/api/categories", categoryController.Create)
-	router.PUT("/api/categories/:idKategori", categoryController.Update)
-	router.DELETE("/api/categories/:idKategori", categoryController.Delete)
-
-	router.PanicHandler = exception.ErrorHandler
+	router := app.NewRouter(categoryController)
 
 	server := http.Server{
 		Addr:    "localhost:3000",
-		Handler: router,
+		Handler: middleware.NewAuthMiddleware(router),
 	}
 
 	error := server.ListenAndServe()

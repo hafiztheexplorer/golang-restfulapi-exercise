@@ -3,10 +3,12 @@
 
 ### get all "namakategori" at table "category"
 GET http://localhost:3000/api/categories
+X-API-Key: APIKEY
 Accept: application/json
 
 ## create new item "namakategori" at table "category"
 POST http://localhost:3000/api/categories
+X-API-Key: APIKEY
 Accept: application/json
 Content-Type: application/json
 
@@ -16,10 +18,12 @@ Content-Type: application/json
 
 ### get items "namakategori" at table "category" by id
 GET http://localhost:3000/api/categories/1
+X-API-Key: APIKEY
 Accept: application/json
 
 ### update item "namakategori" at table "category" by id
 PUT http://localhost:3000/api/categories/1
+X-API-Key: APIKEY // add di testing pada header
 Accept: application/json
 Content-Type: application/json
 
@@ -29,4 +33,5 @@ Content-Type: application/json
 
 ### update item "namakategori" at table "category" by id
 DELETE http://localhost:3000/api/categories/4
+X-API-Key: APIKEY
 Accept: application/json
