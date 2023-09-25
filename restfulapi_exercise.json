@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Kategori RESTful API",
-    "description": "spesifikasi API untuk Kategori RESTful API",
+    "title": "todolist RESTful API",
+    "description": "spesifikasi API untuk todolist RESTful API",
     "version": "1.0.0",
     "contact": {
       "name": "hafiz nur",
@@ -35,18 +35,18 @@
     "url": "https"
   },
   "paths": {
-    "/macamkategori": {
+    "/daftartodolist": {
       "get": {
         "security": [{
             "categoryAuth":[]
         }],
         "tags": [
-          "API kategori"
+          "API todolist"
         ],
-        "summary": "ambil data kategori dari DB",
+        "summary": "ambil data semua todolistittle, todolistcontent, todolistsubcontent dari DB",
         "responses": {
           "200": {
-            "description": "response sukses saat ambil data kategori dari DB",
+            "description": "response sukses saat ambil data dari DB",
             "content": {
               "application/json": {
                 "schema": {
@@ -62,9 +62,9 @@
             "categoryAuth":[]
         }],
         "tags": [
-          "API kategori"
+          "API todolist"
         ],
-        "summary": "masukin data kategori ke DB",
+        "summary": "masukin data ke DB",
         "requestBody": {
           "content": {
             "application/json": {
@@ -88,24 +88,54 @@
         }
       }
     },
-    "/macamkategori/{idKategori}": {
+    "/daftartodolist/{idlist}": {
+      "post": {
+        "security": [{
+            "categoryAuth":[]
+        }],
+        "tags": [
+          "API todolist"
+        ],
+        "summary": "masukin data todolist ke DB",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postRBappjsonschema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "response sukses saat masukin data ke DB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postR200appjsonschema"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "security": [{
             "categoryAuth":[]
         }],
         "tags": [
-          "API kategori"
+          "API todolist"
         ],
-        "summary": "ambil data kategori di database by Id",
-        "description": "ambil data kategori di database by Id",
+        "summary": "ambil data todolist di database by Id",
+        "description": "ambil data todolist di database by Id",
         "parameters": [
           {
-            "$ref": "#/components/parameters/create-update-namakategori"
+            "$ref": "#/components/parameters/create-update-todolisttitle"
           }
         ],
         "responses": {
           "200": {
-            "description": "sukses mendapatkan Id Kategori",
+            "description": "sukses mendapatkan Id todolist",
             "content": {
               "application/json": {
                 "schema": {
@@ -121,13 +151,13 @@
             "categoryAuth":[]
         }],
         "tags": [
-          "API kategori"
+          "API todolist"
         ],
-        "summary": "update data kategori existing di DB by id",
-        "description": "update data kategori existing di DB by id",
+        "summary": "update data todolist existing di DB by id",
+        "description": "update data todolist existing di DB by id",
         "parameters": [
           {
-            "$ref": "#/components/parameters/create-update-namakategori"
+            "$ref": "#/components/parameters/create-update-todolisttitle"
           }
         ],
         "requestBody": {
@@ -141,7 +171,7 @@
         },
         "responses": {
           "200": {
-            "description": "sukses mendapatkan Id Kategori",
+            "description": "sukses mendapatkan Id todolist",
             "content": {
               "application/json": {
                 "schema": {
@@ -157,17 +187,17 @@
             "categoryAuth":[]
         }],
         "tags": [
-          "API kategori"
+          "API todolist"
         ],
-        "summary": "hapus data kategori dari DB",
+        "summary": "hapus data todolist dari DB",
         "parameters": [
           {
-            "$ref": "#/components/parameters/create-update-namakategori"
+            "$ref": "#/components/parameters/create-update-todolisttitle"
           }
         ],
         "responses": {
           "200": {
-            "description": "response sukses saat menghapus data kategori dari DB by Id",
+            "description": "response sukses saat menghapus data todolist dari DB by Id",
             "content": {
               "application/json": {
                 "schema": {
@@ -190,14 +220,14 @@
   },
   "components": {
     "parameters": {
-      "create-update-namakategori": {
-        "name": "idKategori",
+      "create-update-todolisttitle": {
+        "name": "idtodolist",
         "in": "path",
-        "description": "Id Kategori",
+        "description": "Id todolist",
         "required": true,
         "schema": {
           "type": "string",
-          "default": "idKategori",
+          "default": "idtodolist",
           "nullable": false
         }
       }
@@ -214,15 +244,27 @@
           },
           "data": {
             "type": "array",
-            "$ref": "#/components/schemas/data-id-namakategori"
+            "$ref": "#/components/schemas/data-id-todolisttable"
           }
         }
       },
       "postRBappjsonschema": {
         "type": "object",
         "properties": {
-          "namakategori": {
+          "namatodolist": {
             "type": "string"
+          },
+          "todolisttitle": {
+            "type": "string"
+          },
+          "todolistcontent": {
+            "type": "string"
+          },
+          "todolistsubcontent": {
+            "type": "string"
+          },
+          "checked": {
+            "type": "boolean"
           }
         }
       },
@@ -236,18 +278,30 @@
             "type": "string"
           },
           "data": {
-            "$ref": "#/components/schemas/data-id-namakategori"
+            "$ref": "#/components/schemas/data-id-todolisttable"
           }
         }
       },
-      "data-id-namakategori": {
+      "data-id-todolisttable": {
         "type": "object",
         "properties": {
           "id": {
             "type": "number"
           },
-          "namakategori": {
+          "datetime": {
             "type": "string"
+          },
+          "todolisttitle": {
+            "type": "string"
+          },
+          "todolistcontent": {
+            "type": "string"
+          },
+          "todolistsubcontent": {
+            "type": "string"
+          },
+          "checked": {
+            "type": "boolean"
           }
         }
       }

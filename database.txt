@@ -22,3 +22,12 @@ database:
 
 RESTful API:
     -restfulapi_exercise.json
+
+
+todolist:
+id
+datetime
+todolisttitle
+    -todolistcontent
+        -todolistsubcontent
+        -checked
